@@ -1,0 +1,18 @@
+repos:
+- repo: https://github.com/psf/black
+  rev: 23.11.0
+  hooks:
+  - id: black
+    types: [python]
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.1.6
+  hooks:
+  - id: ruff
+    types: [python]
+- repo: local
+  hooks:
+  - id: django-test
+    name: django-test
+    entry: python sky_sync\\manage.py test
+    pass_filenames: false
+    language: system
