@@ -4,12 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-black = "*"
-ruff = "*"
 django = "*"
-pre-commit = "*"
 
 [dev-packages]
+black = "*"
+ruff = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.11"
