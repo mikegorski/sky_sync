@@ -1,4 +1,4 @@
-# Title
+# Set up pre-commit hooks
 
 Date: `2023-11-18`
 
