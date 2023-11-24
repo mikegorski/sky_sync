@@ -44,6 +44,10 @@ We want to achieve following functionalities:
     - Above calculation doesn't account for calls to [Air Pollution API](https://openweathermap.org/api/air-pollution) and [Geocoding API](https://openweathermap.org/api/geocoding-api)
       so the actual number of possible users would be less
     - However, Free tier should be enough for demonstration purposes
+    - **Another important remark** - it actually makes no sense to update data for locations
+      not tracked by any authenticated users. We only need to check if some location's data
+      needs updating (i.e. last entry for current weather data is older than 3 hours)
+      only when any user tracking this location is authenticated or before sending email notification
 
 External supportive sources and tools:
 - [Open Weather API](https://openweathermap.org/) + [Air Pollution API](https://openweathermap.org/api/air-pollution) + [Geocoding API](https://openweathermap.org/api/geocoding-api)

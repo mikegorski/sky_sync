@@ -1,3 +1,4 @@
+fail_fast: true
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.5.0
@@ -24,3 +25,9 @@ repos:
     entry: python sky_sync\\manage.py test
     pass_filenames: false
     language: system
+  - id: commit-msg
+    name: Make sure that commit message starts with [FEAT] or [FIX]
+    entry: '^\[FEAT\]|^\[FIX\]'
+    language: pygrep
+    args: [--negate]
+    stages: [commit-msg]
