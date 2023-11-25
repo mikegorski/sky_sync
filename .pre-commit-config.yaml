@@ -29,5 +29,5 @@ repos:
     name: Make sure that commit message starts with [FEAT] or [FIX]
     entry: '^\[FEAT\]|^\[FIX\]'
     language: pygrep
-    args: [--negate]
-    stages: [commit-msg]
+    args: [ --negate ]
+    stages: [ commit-msg ]
