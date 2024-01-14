@@ -5,3 +5,4 @@ skip-string-normalization = 1
 [tool.ruff]
 line-length = 120
 select = ["F", "E", "W", "I001"]
+ignore = ["F401", "I001"]
