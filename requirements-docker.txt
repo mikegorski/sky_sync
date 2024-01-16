@@ -1,2 +1,4 @@
+crispy-bootstrap4
 Django==5.0.1
+django-crispy-forms
 psycopg2-binary==2.9.9

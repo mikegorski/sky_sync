@@ -1,0 +1,23 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div id="hero" class="hero overlay">
+    <div class="hero-login col-sm-3">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend>Sign Up</legend>
+                    {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn" type="submit">Sign Up</button>
+            </div>
+        </form>
+<!--        <div class="mt-40">-->
+            <p>
+                Already have an account? <a href="{% url 'login' %}">Sign In</a>
+            </p>
+<!--        </div>-->
+    </div>
+</div>
+{% endblock %}
