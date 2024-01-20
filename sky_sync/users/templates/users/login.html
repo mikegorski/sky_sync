@@ -8,15 +8,17 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend>Sign In</legend>
-                {{ form|crispy }}
+                {{ form | crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign In</button>
+                <button class="btn" type="submit">Sign In</button>
+            </div>
+            <div class="form-group">
+               <a href="{% url 'reset-password' %}">Forgot password?</a>
+                <br>
+               <a href="{% url 'register' %}">Do not have an account?</a>
             </div>
         </form>
-            <p>
-                Do not have an account? <a href="{% url 'register' %}">Sign Up</a>
-            </p>
     </div>
 </div>
 

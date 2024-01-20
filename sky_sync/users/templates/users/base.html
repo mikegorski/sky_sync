@@ -26,7 +26,7 @@
     <!-- Favicon
     ================================================== -->
     <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="{% static 'users/img/apple-touch-icon.png' %}">
-    <link rel="shortcut icon" type="image/png" sizes="16x16" href="{% static 'users/img/favicon.png' %}">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="{% static 'users/img/favicon.ico' %}">
 
     <!-- to enable adding scripts in templates extending this one. -->
     {% block script %}{% endblock %}
@@ -38,6 +38,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/responsive.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/custom.css' %}" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -53,7 +54,7 @@
 
                 <div class="navbar-header">
 
-                    <a class="site-title" href="{% url 'home' %}"><span>Sky</span>Sync</a>
+                    <a class="site-title" href="{% url 'landing-page' %}"><span>Sky</span>Sync</a>
 
                 </div><!-- /.navbar-header -->
 
