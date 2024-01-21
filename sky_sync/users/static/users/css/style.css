@@ -836,7 +836,7 @@ html, body {
     text-align: center;
 }
 
-.hero-text h1 {
+.hero-text h1, h2, h3, h4, h5 {
     position: relative;
     margin: 0;
 }

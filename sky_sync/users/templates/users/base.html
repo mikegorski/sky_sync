@@ -40,13 +40,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/responsive.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/custom.css' %}" />
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
 </head>
 
 <body>
+
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
 
     <header id="masthead" class="site-header">
         <nav id="primary-navigation" class="site-navigation">
@@ -61,11 +63,16 @@
                 <div class="collapse navbar-collapse" id="agency-navbar-collapse">
 
                     <ul class="nav navbar-nav navbar-right">
-
-                        <li><a href="#">Login</a></li>
-                        <li><a href="#">Register</a></li>
-                        <li><a href="#">About</a></li>
-
+                        {% if user.is_authenticated %}
+                        <li><form class="logout-form" method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'about' %}">About</a></li>
                     </ul>
 
                 </div>

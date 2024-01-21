@@ -1,20 +1,52 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from .forms import UserRegistrationForm, UserPasswordChangeForm
-from django.contrib import messages
+from .forms import UserRegistrationForm, UserPasswordChangeForm, UserAuthenticationForm
+from .models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.views.generic.edit import FormView
+from .utils import get_email_message
+from django.contrib.sites.shortcuts import get_current_site
+from django.shortcuts import redirect
+from django.http.response import HttpResponseNotFound, HttpResponseBadRequest
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib import messages
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_str
+
+
+class CustomLoginView(LoginView):
+    form_class = UserAuthenticationForm
+    template_name = 'users/login.html'
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data['remember_me']
+        if not remember_me:
+            self.request.session.set_expiry(0)
+            self.request.session.modified = True
+        return super().form_valid(form)
 
 
 class RegisterView(FormView):
     template_name = 'users/register.html'
     form_class = UserRegistrationForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('confirm-registration')
 
     def form_valid(self, form):
-        form.save()
-        username = form.cleaned_data.get('username')
-        messages.success(self.request, f"Account for {username} has been created.")
+        user = form.save()
+        activation_msg = get_email_message(
+            recipient_email=user.email,
+            subject="Activate Your SkySync Account",
+            html_template_name='users/acc_activation_email.html',
+            user=user,
+            domain=get_current_site(self.request).domain,
+        )
+        activation_msg.send()
+        messages.info(
+            self.request,
+            f"Account for {user.username} has been created. In order to activate it, please follow the instructions "
+            f"sent to the provided email address.",
+        )
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -43,5 +75,33 @@ class ChangePasswordView(LoginRequiredMixin, FormView):
         return kwargs
 
 
-def home(request):
+def landing_page(request):
+    if request.user.is_authenticated:
+        return home_view(request)
+    return render(request, 'users/landing_page.html')
+
+
+def home_view(request):
     return render(request, 'users/home.html')
+
+
+def about_view(request):
+    return render(request, 'users/about.html')
+
+
+def after_registration_view(request):
+    return render(request, 'users/after_registration.html')
+
+
+def activation_view(request, uidb64, token):
+    uid = force_str(urlsafe_base64_decode(uidb64))
+    try:
+        user = User.objects.get(pk=uid)
+    except User.DoesNotExist:
+        return HttpResponseNotFound("User not found.")
+    if not default_token_generator.check_token(user, token):
+        return HttpResponseBadRequest("Invalid token.")
+    user.is_active = True
+    user.save()
+    messages.success(request, "Your account has been activated successfully and you can now sign in.")
+    return redirect('login')
