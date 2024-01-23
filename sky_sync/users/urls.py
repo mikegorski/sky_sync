@@ -1,25 +1,25 @@
-from django.urls import path
+from django.urls import path, include, re_path
 from django.contrib.auth.views import LogoutView
 from .views import (
-    landing_page,
     RegisterView,
-    ChangePasswordView,
     CustomLoginView,
-    activation_view,
-    home_view,
-    after_registration_view,
-    about_view,
+    AboutView,
+    ActivationView,
+    AfterRegistrationView,
+    LandingView,
+    HomeView,
 )
 
 urlpatterns = [
-    path('', landing_page, name='landing-page'),
-    path('home/', home_view, name='home'),
-    path('about/', about_view, name='about'),
-    path('confirm-registration/', after_registration_view, name='confirm-registration'),
+    path('', LandingView.as_view(), name='landing-page'),
+    re_path(r'^oauth/', include('social_django.urls', namespace='social')),
+    path('home/', HomeView.as_view(), name='home'),
+    path('about/', AboutView.as_view(), name='about'),
+    path('confirm-registration/', AfterRegistrationView.as_view(), name='confirm-registration'),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-    path('activate/<str:uidb64>/<str:token>', activation_view, name='activate-account')
+    path('activate/<str:uidb64>/<str:token>', ActivationView.as_view(), name='activate-account')
     # path("password_reset", PasswordResetRequestView.as_view(), name="password_reset"),
     # path(
     #     "password_reset/done/",
