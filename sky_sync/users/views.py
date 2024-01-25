@@ -35,6 +35,7 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         user = form.save()
+        user.is_active = False
         activation_msg = get_email_message(
             recipient_email=user.email,
             subject="Activate Your SkySync Account",
@@ -43,11 +44,7 @@ class RegisterView(FormView):
             domain=get_current_site(self.request).domain,
         )
         activation_msg.send()
-        messages.info(
-            self.request,
-            f"Account for {user.username} has been created. In order to activate it, please follow the instructions "
-            f"sent to the provided email address.",
-        )
+
         return super().form_valid(form)
 
     def form_invalid(self, form):
