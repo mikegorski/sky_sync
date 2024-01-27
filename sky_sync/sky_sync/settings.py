@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# OAuth
+# OAuth powered by https://python-social-auth.readthedocs.io/en/latest/
 
 SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.social_auth.social_details',
@@ -125,7 +125,7 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.social_auth.auth_allowed',
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
-    # allow using different providers' auth with the same account:
+    # below line to allow using different providers' auth with the same account
     'social_core.pipeline.social_auth.associate_by_email',
     'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',
@@ -133,7 +133,7 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.user.user_details',
 ]
 
-# built-in JSONB field to store the extracted extra_data
+# enable built-in JSONB field to store any extra_data in case it's extracted
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
 AUTHENTICATION_BACKENDS = [
@@ -144,7 +144,13 @@ AUTHENTICATION_BACKENDS = [
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_KEY']
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
-
+SOCIAL_AUTH_GITHUB_KEY = os.environ['SOCIAL_AUTH_GITHUB_KEY']
+SOCIAL_AUTH_GITHUB_SECRET = os.environ['SOCIAL_AUTH_GITHUB_SECRET']
+# the line below is necessary to correctly get user's email address from GitHub into our app's database
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
+# below line to make the app only request email from the user - same as GitHub OAuth
+# NOT WORKING. Google OAuth2 still requests first and last names.
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ["https://www.googleapis.com/auth/userinfo.email"]
 SOCIAL_AUTH_REQUIRE_POST = True
 
 # Internationalization
