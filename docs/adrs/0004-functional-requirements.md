@@ -15,9 +15,12 @@ Need to define requirements.
 We want to achieve following functionalities:
 - Authentication system features
   - Plain
-  - [OAuth2](https://github.com/jazzband/django-oauth-toolkit)
+  - [OAuth](https://github.com/jazzband/django-oauth-toolkit)
   - Password reset via email
+    - Needs to be customized and use [django-mailer](https://github.com/pinax/django-mailer/blob/master/docs/usage.rst#usage)
+    package in order to increase safety
   - [2FA](https://django-two-factor-auth.readthedocs.io/en/1.15.5/)
+    - Think how it ties in with both OAuth and plain authentication systems
 
 - Main business functionalities
   - Users should be able to add locations (geolocations/places) to their account's dashboard
