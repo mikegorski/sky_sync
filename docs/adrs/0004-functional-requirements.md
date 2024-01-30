@@ -51,6 +51,12 @@ We want to achieve following functionalities:
       not tracked by any authenticated users. We only need to check if some location's data
       needs updating (i.e. last entry for current weather data is older than 3 hours)
       only when any user tracking this location is authenticated or before sending email notification
+    - An additional API should be set up which would connect to a pre-built database containing data
+      regarding geolocations and their corresponding names as in [Geocoding API](https://openweathermap.org/api/geocoding-api)
+      to provide data for the search bar (by name and coordinates). The search process set up this way
+      would be faster and wouldn't require sending requests to [Geocoding API](https://openweathermap.org/api/geocoding-api),
+      which are limited
+    - Getting user's IP address from request can be set up [this way](https://stackoverflow.com/questions/4581789/how-do-i-get-user-ip-address-in-django)
 
 External supportive sources and tools:
 - [Open Weather API](https://openweathermap.org/) + [Air Pollution API](https://openweathermap.org/api/air-pollution) + [Geocoding API](https://openweathermap.org/api/geocoding-api)
@@ -58,6 +64,7 @@ External supportive sources and tools:
 - AWS/ PythonAnywhere/ something else for hosting - demonstration purposes
 - A Docker image allowing to provide one's own [Open Weather API](https://openweathermap.org/) key in order to effectively launch
 and use the app locally by anyone interested - **if possible**
+- Mapping user's IP address to geolocation using [`ip2geolocation`](https://pypi.org/project/ip2geotools/) library
 
 ## Consequences
 
