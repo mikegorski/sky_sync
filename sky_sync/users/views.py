@@ -83,7 +83,7 @@ class HomeView(TemplateView):
 
 
 class LandingView(TemplateView):
-    template_name = 'users/landing_page.html'  # Default template
+    template_name = 'users/landing_page.html'
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
