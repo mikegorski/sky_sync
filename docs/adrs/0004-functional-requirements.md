@@ -64,7 +64,8 @@ External supportive sources and tools:
 - AWS/ PythonAnywhere/ something else for hosting - demonstration purposes
 - A Docker image allowing to provide one's own [Open Weather API](https://openweathermap.org/) key in order to effectively launch
 and use the app locally by anyone interested - **if possible**
-- Mapping user's IP address to geolocation using [`ip2geolocation`](https://pypi.org/project/ip2geotools/) library
+- Mapping user's IP address to geolocation using [`ip2geolocation`](https://pypi.org/project/ip2geotools/) library OR
+[GeoIP2](https://docs.djangoproject.com/en/4.2/ref/contrib/gis/geoip2/) from [GeoDjango](https://docs.djangoproject.com/en/5.0/ref/contrib/gis/)
 
 ## Consequences
 

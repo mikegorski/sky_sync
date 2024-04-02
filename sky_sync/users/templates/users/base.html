@@ -67,6 +67,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         {% if user.is_authenticated %}
+                        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                        <li><a href="#">Profile</a></li>
                         <li><form class="logout-form" method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
                             <button type="submit">Logout</button>

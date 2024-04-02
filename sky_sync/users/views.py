@@ -15,6 +15,9 @@ from django.contrib import messages
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 
+from ipware import get_client_ip
+from datetime import datetime
+
 
 class CustomLoginView(LoginView):
     form_class = UserAuthenticationForm
@@ -25,6 +28,12 @@ class CustomLoginView(LoginView):
         if not remember_me:
             self.request.session.set_expiry(0)
             self.request.session.modified = True
+
+        client_ip, is_routable = get_client_ip(self.request)
+        user = form.get_user()
+        user.ip = client_ip
+        user.last_login = datetime.now()
+        user.save()
         return super().form_valid(form)
 
 
@@ -73,8 +82,8 @@ class ChangePasswordView(LoginRequiredMixin, FormView):
         return kwargs
 
 
-class HomeView(TemplateView):
-    template_name = 'users/home.html'  # Default template
+class DashboardView(TemplateView):
+    template_name = 'users/dashboard.html'  # Default template
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -87,7 +96,7 @@ class LandingView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            self.template_name = 'users/home.html'
+            return redirect('dashboard')
         return render(request, self.template_name)
 
 
