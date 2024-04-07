@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Geolocation, Forecast, Current
+from open_weather_api.models import Geolocation, Forecast, Current
 
 
 class GeolocationSerializer(serializers.ModelSerializer):

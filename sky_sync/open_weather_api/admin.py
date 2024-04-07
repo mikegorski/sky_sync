@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Current, Geolocation, Forecast
+from open_weather_api.models import Current, Geolocation, Forecast
 
 admin.site.register(Current)
 admin.site.register(Geolocation)

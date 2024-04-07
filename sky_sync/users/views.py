@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from .forms import UserRegistrationForm, UserPasswordChangeForm, UserAuthenticationForm
-from .models import User
+from users.forms import UserRegistrationForm, UserPasswordChangeForm, UserAuthenticationForm
+from users.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.views.generic.edit import FormView
 from django.views.generic import TemplateView
-from .utils import get_email_message
+from users.utils import get_email_message
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import redirect
 from django.http.response import HttpResponseNotFound, HttpResponseBadRequest

@@ -6,16 +6,14 @@ from requests import Response
 from requests.exceptions import ConnectionError, RequestException
 from rest_framework.exceptions import ParseError
 
-from .api_urls import (
+from open_weather_api.api_urls import (
     build_current_weather_url,
     build_direct_geocoding_url,
     build_forecast_weather_url,
     build_ip_url,
     build_reverse_geocoding_url,
 )
-
-
-API_TOKEN = os.environ["OPEN_WEATHER_API_KEY"]
+from sky_sync.settings import API_TOKEN
 
 
 def handle_request(url: str) -> Response:

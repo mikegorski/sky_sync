@@ -6,7 +6,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from .views import (
+from users.views import (
     RegisterView,
     CustomLoginView,
     AboutView,

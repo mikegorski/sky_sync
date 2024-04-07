@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CurrentWeatherCreateView, ForecastWeatherCreateView
+from open_weather_api.views import CurrentWeatherCreateView, ForecastWeatherCreateView
 
 urlpatterns = [
     path("data/current/", CurrentWeatherCreateView.as_view(), name="get-current-weather-data"),

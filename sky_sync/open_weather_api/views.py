@@ -5,9 +5,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.views.decorators.http import require_POST
 from django.utils.decorators import method_decorator
-from .serializers import CurrentSerializer, ForecastSerializer
-from .models import Forecast
-from .comm import get_current_weather_data, get_forecast_weather_data
+from open_weather_api.serializers import CurrentSerializer, ForecastSerializer
+from open_weather_api.models import Forecast
+from open_weather_api.comm import get_current_weather_data, get_forecast_weather_data
 from django.db import transaction
 
 
