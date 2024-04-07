@@ -2,6 +2,8 @@ import json
 from rest_framework.generics import CreateAPIView
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.views.decorators.http import require_POST
 from django.utils.decorators import method_decorator
@@ -14,6 +16,8 @@ from django.db import transaction
 @method_decorator(require_POST, name="dispatch")
 class CurrentWeatherCreateView(CreateAPIView):
     serializer_class = CurrentSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         body = json.loads(request.body)
@@ -21,7 +25,7 @@ class CurrentWeatherCreateView(CreateAPIView):
         if not lat or not lon:
             raise ParseError(code=400)
         data = get_current_weather_data(lat, lon)
-        serializer = self.get_serializer(data=data, many=False)
+        serializer = self.get_serializer(data=data, context={"request": request}, many=False)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
@@ -31,6 +35,8 @@ class CurrentWeatherCreateView(CreateAPIView):
 @method_decorator(require_POST, name="dispatch")
 class ForecastWeatherCreateView(CreateAPIView):
     serializer_class = ForecastSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Forecast.objects.all()
 
     def post(self, request, *args, **kwargs):
@@ -39,7 +45,7 @@ class ForecastWeatherCreateView(CreateAPIView):
         if not lat or not lon:
             raise ParseError(code=400)
         data = get_forecast_weather_data(lat, lon)
-        serializer = self.get_serializer(data=data, many=True)
+        serializer = self.get_serializer(data=data, context={"request": request}, many=True)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
             self.queryset.filter(geolocation__lat=lat, geolocation__lon=lon).delete()

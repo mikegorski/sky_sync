@@ -16,8 +16,12 @@ class ForecastSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+        request = self.context.get("request")
+        user = request.user
         location_data = validated_data.pop("geolocation")
-        geolocation, _ = Geolocation.objects.get_or_create(**location_data)
+        geolocation, created = Geolocation.objects.get_or_create(**location_data)
+        if created:
+            user.dashboard.geolocations.add(geolocation)
         return Forecast.objects.create(geolocation=geolocation, **validated_data)
 
 
@@ -29,7 +33,11 @@ class CurrentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+        request = self.context.get("request")
+        user = request.user
         location_data = validated_data.pop("geolocation")
-        geolocation, _ = Geolocation.objects.get_or_create(**location_data)
+        geolocation, created = Geolocation.objects.get_or_create(**location_data)
+        if created:
+            user.dashboard.geolocations.add(geolocation)
         current_data_instance, _ = Current.objects.update_or_create(geolocation=geolocation, defaults=validated_data)
         return current_data_instance

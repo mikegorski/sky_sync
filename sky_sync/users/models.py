@@ -11,8 +11,8 @@ class User(AbstractUser):
 
 
 class Dashboard(models.Model):
-    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
-    geolocations = models.ManyToManyField(to=Geolocation, blank=True)
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name="dashboard")
+    geolocations = models.ManyToManyField(to=Geolocation, blank=True, related_name="dashboards")
 
     def __str__(self):
         return f"{self.user}'s Dashboard"
