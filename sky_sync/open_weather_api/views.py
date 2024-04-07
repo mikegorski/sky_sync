@@ -5,15 +5,12 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from django.views.decorators.http import require_POST
-from django.utils.decorators import method_decorator
 from open_weather_api.serializers import CurrentSerializer, ForecastSerializer
 from open_weather_api.models import Forecast
 from open_weather_api.comm import get_current_weather_data, get_forecast_weather_data
 from django.db import transaction
 
 
-@method_decorator(require_POST, name="dispatch")
 class CurrentWeatherCreateView(CreateAPIView):
     serializer_class = CurrentSerializer
     authentication_classes = [SessionAuthentication, BasicAuthentication]
@@ -32,7 +29,6 @@ class CurrentWeatherCreateView(CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-@method_decorator(require_POST, name="dispatch")
 class ForecastWeatherCreateView(CreateAPIView):
     serializer_class = ForecastSerializer
     authentication_classes = [SessionAuthentication, BasicAuthentication]
