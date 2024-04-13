@@ -7,8 +7,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from open_weather_api.serializers import CurrentSerializer, ForecastSerializer
 from open_weather_api.models import Forecast
-from open_weather_api.comm import get_current_weather_data, get_forecast_weather_data
+from open_weather_api.api.handler import ProcessorHandler, Mode
 from django.db import transaction
+from open_weather_api.api.exceptions import OpenWeatherAPIException
 
 
 class CurrentWeatherCreateView(CreateAPIView):
@@ -21,7 +22,12 @@ class CurrentWeatherCreateView(CreateAPIView):
         lat, lon = body.get("lat"), body.get("lon")
         if not lat or not lon:
             raise ParseError(code=400)
-        data = get_current_weather_data(lat, lon)
+        try:
+            data = ProcessorHandler().get_data(mode=Mode.CURRENT, lat=lat, lon=lon)
+        except OpenWeatherAPIException:
+            return Response(
+                {"result": "Cannot gather data from external service."}, status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
         serializer = self.get_serializer(data=data, context={"request": request}, many=False)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -40,7 +46,12 @@ class ForecastWeatherCreateView(CreateAPIView):
         lat, lon = body.get("lat"), body.get("lon")
         if not lat or not lon:
             raise ParseError(code=400)
-        data = get_forecast_weather_data(lat, lon)
+        try:
+            data = ProcessorHandler().get_data(mode=Mode.FORECAST, lat=lat, lon=lon)
+        except OpenWeatherAPIException:
+            return Response(
+                {"result": "Cannot gather data from external service."}, status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
         serializer = self.get_serializer(data=data, context={"request": request}, many=True)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
