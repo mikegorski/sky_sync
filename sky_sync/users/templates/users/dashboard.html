@@ -1,13 +1,37 @@
 {% extends 'users/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
+
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'users/js/accordion.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 
-    <div id="hero" class="hero overlay">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Hello, {{ user.username }}!</h1>
+<!--    <div id="hero" class="hero overlay">-->
+            <div class="hero-accordion">
+
+                <div class="accordion">
+
+                    {% for data in current_weather_data %}
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>{{ data.geolocation.name }}. Current temperature: {{ data.temperature }}</span>
+                            <button class="accordion-button">Show Forecast</button>
+                        </div>
+                            <div class="accordion-content" data-chart-labels='["January", "February", "March", "April", "May", "June", "July"]' data-chart-data='[12, 19, 3, 5, 2, 3, 10]'>
+                            <p>This is the content of section 1.</p>
+                            <canvas id="chartCanvas"></canvas>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
             </div>
-        </div>
-    </div>
+<!--    </div>-->
+
+
 
 {% endblock %}

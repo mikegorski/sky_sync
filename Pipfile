@@ -8,6 +8,7 @@ django = "*"
 psycopg2 = "*"
 crispy-bootstrap4 = "*"
 django-crispy-forms = "*"
+celery = "*"
 
 [dev-packages]
 black = "*"
