@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'open_weather_api.apps.OpenWeatherApiConfig',
+    'internal_api.apps.InternalApiConfig',
     'crispy_forms',
     'crispy_bootstrap4',
     'social_django',
