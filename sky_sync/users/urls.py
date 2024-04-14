@@ -6,20 +6,20 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from .views import (
+from users.views import (
     RegisterView,
     CustomLoginView,
     AboutView,
     ActivationView,
     AfterRegistrationView,
     LandingView,
-    HomeView,
+    DashboardView,
 )
 
 urlpatterns = [
     path('', LandingView.as_view(), name='landing-page'),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
-    path('home/', HomeView.as_view(), name='home'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('about/', AboutView.as_view(), name='about'),
     path('confirm-registration/', AfterRegistrationView.as_view(), name='confirm-registration'),
     path('register/', RegisterView.as_view(), name='register'),
