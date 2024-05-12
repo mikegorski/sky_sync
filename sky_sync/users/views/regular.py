@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from open_weather_api.models import Current, Forecast
 
 
-class DashboardView(TemplateView, LoginRequiredMixin):
+class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'users/dashboard.html'
 
     def get_context_data(self, **kwargs):
