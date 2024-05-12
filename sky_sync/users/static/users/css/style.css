@@ -785,7 +785,9 @@ html, body {
 /* HERO
 ================================================== */
 .hero {
-    background: url(../img/cloudy_sky.jpg) no-repeat center / cover;
+    background-image: url(../img/cloudy_sky.jpg);
+    background-repeat: repeat;
+    background-size: cover;
     height: 100%;
     width: 100%;
     display: flex;

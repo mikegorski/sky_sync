@@ -42,7 +42,7 @@
     <!-- My modified CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/custom.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/google_button.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'users/css/accordion.css' %}" />
+    {% block css %}{% endblock %}
 
 </head>
 
