@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from users.forms import UserRegistrationForm, UserPasswordChangeForm, UserAuthenticationForm
 from users.models import User
@@ -82,32 +81,6 @@ class ChangePasswordView(LoginRequiredMixin, FormView):
         return kwargs
 
 
-class DashboardView(TemplateView):
-    template_name = 'users/dashboard.html'  # Default template
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            self.template_name = 'users/landing_page.html'
-        return render(request, self.template_name)
-
-
-class LandingView(TemplateView):
-    template_name = 'users/landing_page.html'
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('dashboard')
-        return render(request, self.template_name)
-
-
-class AboutView(TemplateView):
-    template_name = 'users/about.html'
-
-
-class AfterRegistrationView(TemplateView):
-    template_name = 'users/after_registration.html'
-
-
 class ActivationView(TemplateView):
     def get(self, request, *args, **kwargs):
         uidb64 = kwargs["uidb64"]
@@ -123,3 +96,7 @@ class ActivationView(TemplateView):
         user.save()
         messages.success(request, "Your account has been activated successfully and you can now sign in.")
         return redirect('login')
+
+
+class AfterRegistrationView(TemplateView):
+    template_name = 'users/after_registration.html'

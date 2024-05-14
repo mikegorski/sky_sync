@@ -1,0 +1,73 @@
+.tile-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+.tile {
+    width: calc(33% - 10px); /* Adjust based on your desired layout */
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 30px;
+}
+
+.add-tile {
+    width: calc(33% - 10px); /* Adjust based on your desired layout */
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.add-tile:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Darken the tile on hover */
+}
+.add-location-button {
+    position: relative; /* Position the button */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the button */
+    width: 100%; /* Set width */
+    height: 100%; /* Set height */
+    font-size: 24px; /* Increase font size */
+    line-height: 50px; /* Center text vertically */
+    border: none; /* Remove border */
+    background-color: transparent; /* Transparent background */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.tile h2 {
+    font-size: 20px;
+}
+.tile p{
+    font-size: 20px;
+}
+.tile i{
+    font-size: 20px;
+}
+.main-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.location-info {
+  margin-left: 15px;
+  text-align: center;
+}
+.weather-icon i {
+  font-size: 52px;
+}
+.wi-day-sunny {
+  color: #ffcc80;
+}
+.wi-humidity {
+  color: #89cff0;
+}
+@media screen and (max-width: 768px) {
+    .tile {
+        width: 100%;
+    }

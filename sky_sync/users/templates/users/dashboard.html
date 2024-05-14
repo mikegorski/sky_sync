@@ -1,13 +1,54 @@
 {% extends 'users/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
+
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'users/js/accordion.js' %}"></script>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/accordion.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/weather-icons.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/weather-icons-wind.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/weather-tile.css' %}" />
+{% endblock %}
+
 {% block content %}
 
-    <div id="hero" class="hero overlay">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Hello, {{ user.username }}!</h1>
+            <div class="hero-accordion">
+
+                <div class="tile-container">
+                    {% if current_weather_data|length < 10 %}
+                        <div class="tile add-tile">
+                            <button class="add-location-button" onclick="addLocation()">+</button>
+                        </div>
+                    {% endif %}
+                    {% for data in current_weather_data %}
+                        <div class="tile">
+                            <div class="main-info">
+                                <div class="weather-icon">
+                                    <i class="wi wi-day-sunny"></i>
+                                </div>
+                                <div class="location-info">
+                                    <h2 class="city">{{ data.geolocation }}</h2>
+                                    <p class="description">{{ data.description.title }}</p>
+                                </div>
+                              <h2 class="temperature">{{ data.temperature }} <i class="wi wi-celsius"></i></h2>
+                            </div>
+                            <div class="additional-info">
+                                <div class="wind-info">
+                                    <p><i class="wi wi-strong-wind"></i> {{ data.wind_spd }} m/s <i class="wi wi-wind from-{{ data.wind_deg }}-deg"></i></p>
+                                </div>
+                                 <div class="humidity-info">
+                                    <p><i class="wi wi-humidity"></i> {{ data.humidity }}%</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
             </div>
-        </div>
-    </div>
+
 
 {% endblock %}
